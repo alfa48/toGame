@@ -16,7 +16,15 @@ const App: React.FC = () => {
   const isLoading = authLoading || (currentUser && dataLoading);
 
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300);
+    };
 
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -36,39 +44,39 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#212529] text-white relative">
-      <Header 
-        user={currentUser} 
-        onLogout={logout} 
+      <Header
+        user={currentUser}
+        onLogout={logout}
         onCreateTask={() => setIsModalOpen(true)}
       />
       <main className="container mx-auto p-4 md:p-6">
         <div className="flex flex-col lg:flex-row gap-8">
-          
+
           <div className="w-full lg:w-1/4 order-1 lg:order-2 space-y-6">
-             <section aria-labelledby="ranking-heading">
-                <h2 id="ranking-heading" className="text-xl md:text-2xl mb-4 text-center sm:text-left">Top Players</h2>
-                <Ranking users={users} />
+            <section aria-labelledby="ranking-heading">
+              <h2 id="ranking-heading" className="text-xl md:text-2xl mb-4 text-center sm:text-left">Top Players</h2>
+              <Ranking users={users} />
             </section>
           </div>
 
           <div className="w-full lg:w-3/4 order-2 lg:order-1 space-y-6">
-             <section aria-labelledby="quests-heading">
-                <h2 id="quests-heading" className="text-xl md:text-2xl mb-4 text-center sm:text-left">Quests Board</h2>
-                <TaskList 
-                    tasks={tasks} 
-                    currentUser={currentUser} 
-                    onSelectTask={assignTask}
-                    onCompleteTask={finishTask}
-                />
+            <section aria-labelledby="quests-heading">
+              <h2 id="quests-heading" className="text-xl md:text-2xl mb-4 text-center sm:text-left">Quests Board</h2>
+              <TaskList
+                tasks={tasks}
+                currentUser={currentUser}
+                onSelectTask={assignTask}
+                onCompleteTask={finishTask}
+              />
             </section>
           </div>
 
         </div>
       </main>
 
-      <CreateTaskModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <CreateTaskModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         onSubmit={addTask}
       />
 

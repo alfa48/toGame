@@ -10,6 +10,17 @@ export const getTasks = async (): Promise<Task[]> => {
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Task));
 };
 
+export const getTask = async (taskId: string): Promise<Task | null> => {
+  const docRef = doc(db, "tasks", taskId);
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) {
+    return null; // task não encontrada
+  }
+   const task: Task = { id: docSnap.id, ...docSnap.data() } as Task;
+  return task;
+};
+
 export const getUsers = async (): Promise<UserProfile[]> => {
   const usersCol = collection(db, 'users');
   const q = query(usersCol, orderBy('score', 'desc'));
@@ -42,8 +53,8 @@ export const completeTask = async (taskId: string, user: UserProfile): Promise<{
   await updateDoc(taskRef, { state: TaskState.COMPLETED });
   await updateDoc(userRef, { score: increment(10) }); // incrementa os pontos (ou task.points se você buscar o task)
 
-  const taskSnap = await getDocs(taskRef);
-  const userSnap = await getDocs(userRef);
+  const taskSnap = await getDoc(taskRef);
+  const userSnap = await getDoc(userRef);
 
   return {
     updatedTask: { id: taskId, ...taskSnap.data() } as Task,

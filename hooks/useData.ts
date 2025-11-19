@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Task, UserProfile } from "../types";
+import { Task, TaskState, UserProfile } from "../types";
 import * as DataService from "../services/firebase";
 
 /**
@@ -89,8 +89,20 @@ export const useData = (currentUser: UserProfile | null) => {
     setLoading(true);
     setError(null);
     try {
+      const task = await DataService.getTask(taskId);
+      if (task.state == TaskState.COMPLETED) {
+        console.warn(`Task ${taskId} is already completed.`);
+        return;
+      }
       console.log(`Completing task ${taskId} for ${currentUser.displayName}`);
       await DataService.completeTask(taskId, currentUser);
+      // Atualiza o estado local imediatamente
+     
+     /* setTasks((prevTasks) =>
+        prevTasks.map((t) =>
+          t.id === taskId ? { ...t, state: TaskState.COMPLETED } : t
+        )
+      );*/
       await fetchData();
     } catch (e) {
       console.error("Failed to complete task:", e);
