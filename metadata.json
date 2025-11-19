@@ -1,0 +1,5 @@
+{
+  "name": "toGame - Gamified Task Manager",
+  "description": "A gamified mini-system to help students and developers organize tasks, track progress, and compete in a healthy way through a points-based ranking. The interface is inspired by retro games using NES.css.",
+  "requestFramePermissions": []
+}

@@ -1,55 +1,67 @@
 <!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login | Mini To-Do Gamer</title>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>toGame - Gamified Tasks</title>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Press Start 2P', cursive;
+        background-color: #212529;
+        color-scheme: dark;
+      }
+      /* Custom scrollbar to match the retro theme */
+      ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #212529;
+        border-left: 4px solid #4a4a4a;
+        border-right: 4px solid #4a4a4a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: #929292;
+        border: 2px solid #212529;
+      }
+       ::-webkit-scrollbar-thumb:hover {
+        background-color: #a2a2a2;
+      }
 
-  <!-- NES.css -->
-  <link rel="stylesheet" href="https://unpkg.com/nes.css/css/nes.min.css">
-  <link rel="stylesheet" href="css/style.css">
-
-  <!-- Fonte Press Start 2P -->
-  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-</head>
-<body>
-
-<div class="nes-container with-title" style="max-width:400px; margin:auto; margin-top:100px;">
-  <h1 class="title">Login</h1>
-  <button id="loginBtn" class="nes-btn is-primary">Entrar com Google</button>
-</div>
-
-<!-- Script modular -->
-<script type="module">
-  import { loginWithGoogle, createOrUpdateUser } from './js/firebase.js';
-
-  const loginBtn = document.getElementById('loginBtn');
-
-loginBtn.onclick = async () => {
-  try {
-    console.log("1. Clicou no botão");
-
-    const user = await loginWithGoogle();
-    console.log("2. Login OK:", user.uid);
-
-    localStorage.setItem("userId", user.uid);
-    localStorage.setItem("userName", user.displayName);
-
-    console.log("3. Salvou no localStorage");
-
-    await createOrUpdateUser(user.uid, user.displayName);
-    console.log("4. createOrUpdateUser OK");
-
-    console.log("5. Redirecionando...");
-    window.location.href = "home.html";
-
-  } catch(err) {
-    console.error("ERRO:", err);
-    alert("Erro ao fazer login: " + err.message);
+      /* Fix for input text color on dark theme */
+      .nes-input,
+      .nes-textarea,
+      .nes-select select {
+        color: #fff;
+      }
+      .nes-input::placeholder,
+      .nes-textarea::placeholder {
+        color: #929292;
+      }
+      
+      /* Make dialogs scrollable on small screens */
+      dialog[open] {
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.3.1",
+    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client"
   }
-};
-
+}
 </script>
-
-</body>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <noscript>Você precisa habilitar o JavaScript para rodar este app.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>
