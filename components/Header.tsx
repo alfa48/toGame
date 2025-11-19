@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout, onCreateTask }) => {
               className="nes-btn is-primary"
               onClick={onCreateTask}
             >
-              New Quest
+              Nova missão
             </button>
           )}
           <button 

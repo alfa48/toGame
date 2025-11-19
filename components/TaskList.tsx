@@ -16,7 +16,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, currentUser, onSelectTask, o
     return (
       <div className="flex justify-center items-center h-64">
         <div className="nes-container is-dark is-centered p-4 text-center">
-          <p className="text-sm sm:text-base">No quests available. Create one to begin!</p>
+          <p className="text-sm sm:text-base">Nenhuma missão disponível. Create one to begin!</p>
         </div>
       </div>
     );

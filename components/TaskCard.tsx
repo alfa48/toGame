@@ -33,7 +33,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, currentUser, onSelect, onComp
   return (
     <div>
       <div className="nes-container is-dark with-title is-rounded flex flex-col h-full p-4 sm:p-3 min-w-[250px] max-w-[400px]">
-        
+
         {/* Título truncado */}
         <p className="title truncate text-sm sm:text-base">
           {truncate(task.title, 10)}
@@ -78,7 +78,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, currentUser, onSelect, onComp
             </div>
 
             <div className="flex justify-between w-full">
-              <span>Prazo:</span> 
+              <span>Prazo:</span>
               <span className="text-red-500">{getDaysLeft(task.deadline)} dias</span>
             </div>
 
@@ -121,6 +121,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, currentUser, onSelect, onComp
 
       {/* Modal de mensagem */}
       <CreateMessageModal
+        currentUser={currentUser}
         isOpen={isMessageOpen}
         onClose={() => setIsMessageOpen(false)}
       />
